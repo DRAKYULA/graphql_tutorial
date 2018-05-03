@@ -1,7 +1,13 @@
+require('dotenv').load();
+
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
+const mongoose = require('mongoose');
+
 const app = express();
+
+mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds113870.mlab.com:13870/gql-ninja');
 
 app.use('/graphql', graphqlHTTP({
   schema,
