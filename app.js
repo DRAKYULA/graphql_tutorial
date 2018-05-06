@@ -7,7 +7,13 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds113870.mlab.com:13870/gql-ninja');
+const user = process.env.MLABUSER;
+const pw   = process.env.MLABPW
+
+mongoose.connect(`mongodb://${user}:${pw}@ds113870.mlab.com:13870/gql-ninja`);
+mongoose.connection.once('open', () => {
+  console.log('connected to db');
+});
 
 app.use('/graphql', graphqlHTTP({
   schema,
